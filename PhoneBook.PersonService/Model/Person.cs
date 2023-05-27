@@ -19,7 +19,11 @@ namespace PhoneBook.PersonService.Model
         // created_date timestamp NULL,
         public DateTime created_date { get; set; }
         // deleted_date timestamp NULL
-        public DateTime deleted_date { get; set; }
+        public DateTime? deleted_date { get; set; }
 
+        public Person()
+        {
+            created_date = DateTime.Now;
+        }
     }
 }

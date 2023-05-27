@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace PhoneBook.PersonService
 {
     public class PersonContext : DbContext
     {
+
         public PersonContext(DbContextOptions options) : base(options)
         {
 
