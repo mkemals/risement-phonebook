@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhoneBook.PersonService.Model
 {
@@ -6,7 +7,7 @@ namespace PhoneBook.PersonService.Model
     public class Person
     {
 
-        // person_id uuid NOT NULL,
+        [Key]
         public Guid person_id { get; set; }
         // firstname varchar NULL,
         public string firstname { get; set; }

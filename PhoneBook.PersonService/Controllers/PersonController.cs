@@ -20,9 +20,8 @@ namespace PhoneBook.PersonService.Controllers
         [HttpGet]
         public IEnumerable<DTO.Person> Get()
         {
-            return mapper.Map<IEnumerable<DTO.Person>>(
-                    dbContext.Persons.Where(w => w.deleted == false)
-            );
+            var persons = dbContext.Persons.Where(w => w.deleted == false);
+            return mapper.Map<IEnumerable<DTO.Person>>(persons);
         }
 
         [HttpGet("{uuid}")]

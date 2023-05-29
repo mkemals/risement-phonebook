@@ -6,11 +6,13 @@ namespace PhoneBook.PersonService
     {
         public static void Main(string[] args)
         {
+            GlobalConfiguration.Build();
+
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllers();
 
             // add AutoMapper
-            builder.Services.AddSingleton(MapperConfig.InitializeAutomapper());
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // add EF
             builder.Services.AddEntityFrameworkNpgsql()
