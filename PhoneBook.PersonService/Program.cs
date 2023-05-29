@@ -11,6 +11,9 @@ namespace PhoneBook.PersonService
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllers();
 
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
             // add AutoMapper
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -19,6 +22,11 @@ namespace PhoneBook.PersonService
                             .AddDbContext<PersonContext>(o => o.UseNpgsql(GlobalConfiguration.ConnectionStrings.PhoneBook));
 
             var app = builder.Build();
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
+
             app.UseAuthorization();
             app.MapControllers();
             app.Run();

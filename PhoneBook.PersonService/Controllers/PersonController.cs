@@ -17,6 +17,10 @@ namespace PhoneBook.PersonService.Controllers
             mapper = mapr;
         }
 
+        /// <summary>
+        /// Tüm aktif Person kayıtlarını getir
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<DTO.Person> Get()
         {
@@ -24,6 +28,11 @@ namespace PhoneBook.PersonService.Controllers
             return mapper.Map<IEnumerable<DTO.Person>>(persons);
         }
 
+        /// <summary>
+        /// uuid değeri için ilgili Person kaydını getir
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <returns></returns>
         [HttpGet("{uuid}")]
         public DTO.Person Get(Guid uuid)
         {
@@ -35,6 +44,10 @@ namespace PhoneBook.PersonService.Controllers
             return mapper.Map<DTO.Person>(person);
         }
 
+        /// <summary>
+        /// Verilen person kaydını DB'ye kaydet
+        /// </summary>
+        /// <param name="person"></param>
         [HttpPost]
         public void Post([FromBody] DTO.Person person)
         {
@@ -43,6 +56,10 @@ namespace PhoneBook.PersonService.Controllers
             dbContext.SaveChanges();
         }
 
+        /// <summary>
+        /// uuid'si verilen Person kaydını sil.
+        /// </summary>
+        /// <param name="uuid"></param>
         [HttpDelete("{uuid}")]
         public void Delete(Guid uuid)
         {
@@ -50,6 +67,7 @@ namespace PhoneBook.PersonService.Controllers
             if (person != null)
             {
                 person.deleted = true;
+                person.deleted_date = DateTime.Now;
                 dbContext.Persons.Update(person);
                 dbContext.SaveChanges();
             }

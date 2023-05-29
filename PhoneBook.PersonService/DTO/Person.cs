@@ -16,7 +16,15 @@ namespace PhoneBook.PersonService.DTO
         [SourceMember("firm")]
         public string Firm { get; set; } = "";
 
+        public List<Contact> Contacts { get; set; }
+
         //[SourceMember("deleted")]
         //public bool Deleted { get; set; } = false;
+
+        public Person()
+        {
+            Contacts = new List<Contact>();
+        }
+
     }
 }
