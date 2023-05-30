@@ -8,51 +8,62 @@ namespace PhoneBook.PersonService.Controllers
     public class PersonController : ControllerBase
     {
 
-        private PersonContext dbContext;
-        private IMapper mapper;
+        Repository.PersonRepository personRepository { get; set; }
 
         public PersonController(PersonContext dbx, IMapper mapr)
         {
-            dbContext = dbx;
-            mapper = mapr;
+            personRepository = new Repository.PersonRepository(dbx, mapr);
         }
 
+        /// <summary>
+        /// Tüm aktif Person kayıtlarını getir
+        /// </summary>
+        /// <returns></returns>
+        [Route("persons")]
         [HttpGet]
         public IEnumerable<DTO.Person> Get()
         {
-            var persons = dbContext.Persons.Where(w => w.deleted == false);
-            return mapper.Map<IEnumerable<DTO.Person>>(persons);
+            return personRepository.GetPersons();
         }
 
+        /// <summary>
+        /// uuid değeri için ilgili Person kaydını getir
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <returns></returns>
+        [Route("person/{}")]
         [HttpGet("{uuid}")]
         public DTO.Person Get(Guid uuid)
         {
-            Model.Person? person = dbContext.Persons.FirstOrDefault(f => f.person_id == uuid && f.deleted == false);
-            if (person == null)
-            {
-                // TODO: Service Error Message
-            }
-            return mapper.Map<DTO.Person>(person);
+            return personRepository.GetPerson(uuid);
         }
 
+        /// <summary>
+        /// Verilen person kaydını DB'ye kaydet
+        /// </summary>
+        /// <param name="person"></param>
         [HttpPost]
         public void Post([FromBody] DTO.Person person)
         {
-            Model.Person item = mapper.Map<Model.Person>(person);
-            dbContext.Persons.Add(item);
-            dbContext.SaveChanges();
+            try
+            {
+                personRepository.SavePerson(person);
+            }
+            catch (Exception)
+            {
+                //TODO: error message
+            }
         }
 
+        /// <summary>
+        /// uuid'si verilen Person kaydını sil.
+        /// </summary>
+        /// <param name="uuid"></param>
         [HttpDelete("{uuid}")]
         public void Delete(Guid uuid)
         {
-            var person = dbContext.Persons.FirstOrDefault(f => f.person_id == uuid);
-            if (person != null)
-            {
-                person.deleted = true;
-                dbContext.Persons.Update(person);
-                dbContext.SaveChanges();
-            }
+            personRepository.Delete(uuid);
         }
+
     }
 }

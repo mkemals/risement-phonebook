@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace PhoneBook.PersonService
+namespace PhoneBook.ReportService
 {
     public class Program
     {
@@ -20,7 +20,7 @@ namespace PhoneBook.PersonService
 
             // add EF
             builder.Services.AddEntityFrameworkNpgsql()
-                            .AddDbContext<PersonContext>(o => o.UseNpgsql(GlobalConfiguration.ConnectionStrings.PhoneBook));
+                            .AddDbContext<ReportContext>(o => o.UseNpgsql(GlobalConfiguration.ConnectionStrings.PhoneBook));
 
             var app = builder.Build();
 
