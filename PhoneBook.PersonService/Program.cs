@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace PhoneBook.PersonService
 {
@@ -6,6 +6,7 @@ namespace PhoneBook.PersonService
     {
         public static void Main(string[] args)
         {
+            // Config değerleri uygulama başlangıcında çekiliyor.
             GlobalConfiguration.Build();
 
             var builder = WebApplication.CreateBuilder(args);

@@ -17,7 +17,7 @@ namespace PhoneBook.ReportService.Controllers
         public ReportController()
         {
             factory = new ConnectionFactory();
-            factory.HostName = "amqps://cdrxtokv:MKa99Z0ZrIAFuLNpm8-SynAS2rmfLwfJ@goose.rmq2.cloudamqp.com/cdrxtokv";
+            factory.HostName = GlobalConfiguration.AppSettings.CloudAMQP;
         }
 
         [HttpGet]

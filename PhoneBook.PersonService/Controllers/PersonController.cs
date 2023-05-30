@@ -8,13 +8,11 @@ namespace PhoneBook.PersonService.Controllers
     public class PersonController : ControllerBase
     {
 
-        private PersonContext dbContext;
-        private IMapper mapper;
+        Repository.PersonRepository personRepository { get; set; }
 
         public PersonController(PersonContext dbx, IMapper mapr)
         {
-            dbContext = dbx;
-            mapper = mapr;
+            personRepository = new Repository.PersonRepository(dbx, mapr);
         }
 
         /// <summary>
@@ -25,8 +23,7 @@ namespace PhoneBook.PersonService.Controllers
         [HttpGet]
         public IEnumerable<DTO.Person> Get()
         {
-            var persons = dbContext.Persons.Where(w => w.deleted == false);
-            return mapper.Map<IEnumerable<DTO.Person>>(persons);
+            return personRepository.GetPersons();
         }
 
         /// <summary>
@@ -38,13 +35,7 @@ namespace PhoneBook.PersonService.Controllers
         [HttpGet("{uuid}")]
         public DTO.Person Get(Guid uuid)
         {
-            Model.Person? person = dbContext.Persons.FirstOrDefault(f => f.person_id == uuid && f.deleted == false);
-            // TODO: Contact bilgisi join edilecek
-            if (person == null)
-            {
-                // TODO: Service Error Message
-            }
-            return mapper.Map<DTO.Person>(person);
+            return personRepository.GetPerson(uuid);
         }
 
         /// <summary>
@@ -54,9 +45,14 @@ namespace PhoneBook.PersonService.Controllers
         [HttpPost]
         public void Post([FromBody] DTO.Person person)
         {
-            Model.Person item = mapper.Map<Model.Person>(person);
-            dbContext.Persons.Add(item);
-            dbContext.SaveChanges();
+            try
+            {
+                personRepository.SavePerson(person);
+            }
+            catch (Exception)
+            {
+                //TODO: error message
+            }
         }
 
         /// <summary>
@@ -66,14 +62,8 @@ namespace PhoneBook.PersonService.Controllers
         [HttpDelete("{uuid}")]
         public void Delete(Guid uuid)
         {
-            var person = dbContext.Persons.FirstOrDefault(f => f.person_id == uuid);
-            if (person != null)
-            {
-                person.deleted = true;
-                person.deleted_date = DateTime.Now;
-                dbContext.Persons.Update(person);
-                dbContext.SaveChanges();
-            }
+            personRepository.Delete(uuid);
         }
+
     }
 }

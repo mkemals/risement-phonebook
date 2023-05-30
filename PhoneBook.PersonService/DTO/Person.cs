@@ -16,6 +16,7 @@ namespace PhoneBook.PersonService.DTO
         [SourceMember("firm")]
         public string Firm { get; set; } = "";
 
+        //TODO: AutoMapper 'a tanıtılacak
         public List<Contact> Contacts { get; set; }
 
         //[SourceMember("deleted")]

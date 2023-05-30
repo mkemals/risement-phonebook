@@ -27,11 +27,11 @@
 
     public class ConfigConnectionStrings
     {
-        public string _PhoneBook { get; set; } = "";
         public string PhoneBook { get; set; } = "";
     }
     public class ConfigAppSettings
     {
+        public string CloudAMQP { get; set; }
     }
 
 }

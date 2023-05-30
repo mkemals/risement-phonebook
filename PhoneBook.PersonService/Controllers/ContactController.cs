@@ -8,6 +8,7 @@ namespace PhoneBook.PersonService.Controllers
     public class ContactController : ControllerBase
     {
 
+        //TODO: DB işlemleri Repository'ye taşınacak
         private ContactContext dbContext;
         private IMapper mapper;
 
