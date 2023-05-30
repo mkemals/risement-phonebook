@@ -5,6 +5,7 @@ Microservice mimarisinde bir telefon defteri uygulaması.
 + Servisler Asp.net Core WebAPI
 + Veritabanı için PostgreSQL
 + Rapor isteklerini kuyruğa almak için RabbitMQ
++ Servis meta dökümanı için Swagger
 
 
 RabbitMQ:
