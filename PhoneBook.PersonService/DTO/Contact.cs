@@ -1,15 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using AutoMapper.Configuration.Annotations;
 
 namespace PhoneBook.PersonService.DTO
 {
     public class Contact
     {
-        public Guid UUID { get; set; }
-        public string FirstName { get; set; } = "";
-        public string LastName { get; set; } = "";
-        public string Firm { get; set; } = "";
-        public bool Deleted { get; set; } = false;
-        public DateTime Created_date { get; set; }
-        public DateTime Deleted_date { get; set; }
+        [SourceMember("contact_id")]
+        public Guid ContactID { get; set; }
+
+        [SourceMember("person_id")]
+        public Guid Person_UUID { get; set; }
+
+        [SourceMember("contact_type_id")]
+        public byte ContactTypeID { get; set; }
+
+        [SourceMember("contact_info")]
+        public string ContactInfo { get; set; } = "";
+
+        [SourceMember("by_default")]
+        public bool byDefault { get; set; } = true;
     }
 }

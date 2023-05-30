@@ -21,6 +21,7 @@ namespace PhoneBook.PersonService.Controllers
         /// Tüm aktif Person kayıtlarını getir
         /// </summary>
         /// <returns></returns>
+        [Route("persons")]
         [HttpGet]
         public IEnumerable<DTO.Person> Get()
         {
@@ -33,10 +34,12 @@ namespace PhoneBook.PersonService.Controllers
         /// </summary>
         /// <param name="uuid"></param>
         /// <returns></returns>
+        [Route("person/{}")]
         [HttpGet("{uuid}")]
         public DTO.Person Get(Guid uuid)
         {
             Model.Person? person = dbContext.Persons.FirstOrDefault(f => f.person_id == uuid && f.deleted == false);
+            // TODO: Contact bilgisi join edilecek
             if (person == null)
             {
                 // TODO: Service Error Message
